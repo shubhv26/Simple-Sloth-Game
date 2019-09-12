@@ -1,0 +1,58 @@
+module My_game(input logic clk,rst,SW1,SW2,SW3,
+					 output logic LEDR,
+					 output logic HEX00,HEX01,HEX02,HEX03,HEX04,HEX05,HEX06,HEX07);
+					 
+reg [4:0]dig1,dig2,dig3;
+reg [7:0]count1,count2,count3;
+reg [15:0] counter; // for 1ms delay
+assign LEDR=rst; // to show reset light
+
+always_ff@(posedge clk)
+begin
+	if(!rst)
+	begin
+		counter<=0;
+		dig1<=0;
+		dig2<=0;
+		dig3<=0;
+	end
+	else if(counter==50000)
+	begin
+		counter<=0;
+		
+		dig1<=dig1+1;
+		//dig2<=dig2+3;
+		//dig3<=dig3+6;
+		end
+	else
+	counter<=counter+1;
+end
+
+always@(*)
+begin
+case(min1) //include decimal point: eg 2.60--> 2 mins 60 secs...LSB--> DP value low
+4'b0000 :  count1 = 8'b00000010; //0.
+4'b0001 :  count1 = 8'b10011110; //1.
+4'b0010 :  count1 = 8'b00100100; //2.
+4'b0011 :  count1 = 8'b00001100; //3.
+4'b0100 :  count1 = 8'b10011000; //4.
+4'b0101 :  count1 = 8'b01001000; //5. 
+4'b0110 :  count1 = 8'b01000000; //6.
+4'b0111 :  count1 = 8'b00011110; //7.
+4'b1000 :  count1 = 8'b00000000; //8.
+4'b1001 :  count1 = 8'b00001000; //9.
+default :  count1 = 8'b00000010; //0.
+endcase
+end
+
+assign HEX20 = count1[7];                
+assign HEX21 = count1[6]; 
+assign HEX22 = count1[5]; 
+assign HEX23 = count1[4];
+assign HEX24 = count1[3];
+assign HEX25 = count1[2];
+assign HEX26 = count1[1];
+assign HEX27 = count1[0];
+endmodule	
+		
+		   
